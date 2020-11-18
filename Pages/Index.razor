@@ -4,4 +4,26 @@
 
 Welcome to your new app.
 
+<DynamicForm 
+    FormDefinition="sample-data/simple-form.json"
+    Title="Test form"
+    Model="@model"
+    />
+
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+{
+    public Model model = new Model();
+    
+    public class Model
+    {
+        public string Test1 { get; set; }
+        public string Test2 { get; set; }
+
+        public override string ToString()
+        {
+            return $"{{Test1: {Test1}}}, {{Test2: {Test2}}}";
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "controls": [
+    {
+      "control": "Textbox",
+      "name": "Test1",
+      "placeholder": "Hello, World"
+    },
+    {
+      "control": "RadioButton",
+      "name": "Test2"
+    }
+  ]
+}
