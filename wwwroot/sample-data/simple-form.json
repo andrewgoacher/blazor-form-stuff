@@ -3,12 +3,11 @@
     {
       "control": "Textbox",
       "name": "Test1",
-      "placeholder": "Hello, World"
+      "placeholder": ", world!"
     },
     {
       "control": "Textbox",
-      "name": "Test2",
-      "placeholder": "Hello, World"
+      "name": "Test2"
     }
   ]
 }
