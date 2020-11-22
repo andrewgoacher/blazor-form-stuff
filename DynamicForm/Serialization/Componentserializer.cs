@@ -17,7 +17,6 @@ namespace blazorapp.DynamicForm.Serialization
             switch (control)
             {
                 case "Textbox": return new TextboxFormComponent(parts);
-                case "RadioButton": return new RadioButtonFormComponent(parts);
                 default: throw new InvalidOperationException($"Invalid control: {control}");
             }
         }

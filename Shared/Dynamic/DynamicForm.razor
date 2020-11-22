@@ -1,71 +1,83 @@
 @using System.Net
 @using System.Text.Json
 @using System.ComponentModel
+@using System.Reflection
 @using blazorapp.DynamicForm
 @using blazorapp.DynamicForm.Serialization
 @inject HttpClient Http
+
+@typeparam TModel
 
 <h3>@Title</h3>
 
 <EditForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    
+
     @if (_formDefinition != null && _formDefinition.Components != null)
     {
         @foreach (var component in _formDefinition.Components)
         {
             <label>@component.Name</label><br />
-            <Question Component="@component" /><br/>
+                @switch (component.Control)
+                {
+                    case "Textbox":
+                        <TextboxComponent
+                            Component="@component"
+                            Value="@_properties[component.Name].GetValue(Model).ToString()"
+                            ValueChanged="value => UpdateModel(component.Name, value)"
+                            />
+                        break;
+                }
+    <br/>
         }
     }
-    
-    @* <InputText id="name" @bind-Value="exampleModel.Name" /> *@
 
     <button type="submit">Submit</button>
 </EditForm>
 
 @code {
     private FormDefinition _formDefinition;
+    private Dictionary<string, PropertyInfo> _properties;
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine($"Debugging: {FormDefinition}");
         var serializeOptions = new JsonSerializerOptions();
-        // serializeOptions.Converters.Add(new FormSerializer());
         serializeOptions.Converters.Add(new Componentserializer());
         serializeOptions.WriteIndented = true;
         _formDefinition = await Http.GetFromJsonAsync<FormDefinition>(FormDefinition, serializeOptions);
 
-        if (_formDefinition == null)
+        if (_formDefinition != null && _formDefinition.Components != null)
         {
-            Console.WriteLine("Form is null");
+            _properties = Model.GetType().GetProperties().ToDictionary(
+                k => k.Name,
+                v => v);
         }
-        else
-        {
-            if (_formDefinition.Components == null || _formDefinition.Components.Length == 0)
-            {
-                Console.WriteLine("Form is empty");
-            }
-            else
-            {
-                Console.WriteLine($"Form contains {_formDefinition.Components.Length} elements");
-            }
-        }
+        Console.WriteLine(_formDefinition);
+        Console.WriteLine(_properties);
     }
-    
+
+    private async Task UpdateModel(string name, string value)
+    {
+        _properties[name].SetValue(Model, value);
+        await ModelChanged.InvokeAsync(Model);
+    }
+
     private void HandleValidSubmit()
     {
         Console.WriteLine("Submit");
         Console.WriteLine(Model.ToString());
     }
-    
+
     [Parameter]
     public string FormDefinition { get; set; }
-    
+
     [Parameter]
     public string Title { get; set; }
+
+    [Parameter]
+    public TModel Model { get; set; }
     
     [Parameter]
-    public object Model { get; set; }
+    public EventCallback<TModel> ModelChanged { get; set; }
 }

@@ -6,8 +6,9 @@
       "placeholder": "Hello, World"
     },
     {
-      "control": "RadioButton",
-      "name": "Test2"
+      "control": "Textbox",
+      "name": "Test2",
+      "placeholder": "Hello, World"
     }
   ]
 }

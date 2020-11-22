@@ -1,0 +1,16 @@
+@inherits FormComponentBase
+
+<input @oninput="OnValueChanged" 
+        type="text"
+        value="@Value"
+        name="@Component.Name"
+/>
+
+@code {
+
+        private async Task OnValueChanged(ChangeEventArgs e)
+        {
+            await ValueChanged.InvokeAsync(e.Value.ToString());
+        }
+
+}

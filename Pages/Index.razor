@@ -1,16 +1,17 @@
 ﻿@page "/"
+@using blazorapp.DynamicForm.Components
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<DynamicForm 
+<DynamicForm
     FormDefinition="sample-data/simple-form.json"
     Title="Test form"
-    Model="@model"
+    @bind-Model="model"
     />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+Value is: @model
 
 @code
 {
@@ -18,8 +19,8 @@ Welcome to your new app.
     
     public class Model
     {
-        public string Test1 { get; set; }
-        public string Test2 { get; set; }
+        public string Test1 { get; set; } = "";
+        public string Test2 { get; set; } = "";
 
         public override string ToString()
         {
