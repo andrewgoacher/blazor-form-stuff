@@ -1,0 +1,54 @@
+@using blazorapp.DynamicForm.Components
+@inherits FormComponentBase
+
+    @foreach (var option in GetOptions())
+    {
+        <label for="@GetId(option)">@option</label>
+        if (option.Equals(Value))
+        {
+            <input type="radio" 
+                   id="@GetId(option)" 
+                   name="@Component.Name" 
+                   value="@option" 
+                   @onchange="OnValueChanged"
+                   checked="checked" />
+        }
+        else
+        {
+            <input type="radio" 
+                   id="@GetId(option)" 
+                   name="@Component.Name" 
+                   @onchange="OnValueChanged"
+                   value="@option" />
+        }
+    }
+
+@code {
+    private RadioFormComponent _radioFormComponent;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _radioFormComponent = (Component as RadioFormComponent);
+    }
+
+    private string GetId(string option)
+    {
+        return $"{Component.Name}-{option}";
+    }
+
+    private string[] GetOptions()
+    {
+        if (_radioFormComponent == null)
+        {
+            return new string[0];
+        }
+        
+        return _radioFormComponent.Options;
+    }
+
+    private async Task OnValueChanged(ChangeEventArgs arg)
+    {
+        await ValueChanged.InvokeAsync(arg.Value.ToString());
+    }
+
+}

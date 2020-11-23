@@ -19,13 +19,18 @@ Value is: @model
     
     public class Model
     {
-        public string Test1 { get; set; } = "Hello, ";
-        public string Test2 { get; set; } = "World!";
-        public string Test3 { get; set; } = "Two";
+        public string Test1 { get; set; } = "";
+        public string Test2 { get; set; } = "";
+        public string Test3 { get; set; } = "";
+        public string Test4 { get; set; } = "";
 
         public override string ToString()
         {
-            return $"{{Test1: {Test1}}}, {{Test2: {Test2}}}, {{Test3: {Test3}}}";
+            return $"{{\n\t{{Test1: {Test1}}}, " +
+                   $"\n\t{{Test2: {Test2}}}, " +
+                   $"\n\t{{Test3: {Test3}}}" +
+                   $"\n\t{{Test4: {Test4}}}" +
+                $"\n}}";
         }
     }
 }

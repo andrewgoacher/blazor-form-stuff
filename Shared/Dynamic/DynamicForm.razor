@@ -32,6 +32,12 @@
                         Value="@_properties[component.Name].GetValue(Model).ToString()"
                         ValueChanged="value => UpdateModel(component.Name, value)" />
                     break;
+                case "Radio":
+                    <RadioComponent
+                        Component="@component"
+                        Value="@_properties[component.Name].GetValue(Model).ToString()"
+                        ValueChanged="value => UpdateModel(component.Name, value)" />
+                    break;
             }
             <br/>
         }
