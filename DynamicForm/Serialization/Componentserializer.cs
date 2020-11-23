@@ -17,6 +17,7 @@ namespace blazorapp.DynamicForm.Serialization
             switch (control)
             {
                 case "Textbox": return new TextboxFormComponent(parts);
+                case "Select": return new SelectFormComponent(parts);
                 default: throw new InvalidOperationException($"Invalid control: {control}");
             }
         }
@@ -36,7 +37,6 @@ namespace blazorapp.DynamicForm.Serialization
                 if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException();
 
                 var propertyName = reader.GetString();
-
 
                 // Get the value.
                 var v = JsonSerializer.Deserialize<object>(ref reader, options);

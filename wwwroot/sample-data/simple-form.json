@@ -8,6 +8,12 @@
     {
       "control": "Textbox",
       "name": "Test2"
+    },
+    {
+      "control": "Select",
+      "name": "Test3",
+      "options": ["One", "Two", "Three"],
+      "placeholder": "Select one please"
     }
   ]
 }

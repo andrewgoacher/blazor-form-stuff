@@ -1,0 +1,46 @@
+@using blazorapp.DynamicForm.Components
+@inherits FormComponentBase
+
+<select name="@Component.Name" @onchange="OnValueChanged">
+    @if (string.IsNullOrEmpty(_selectComponent?.Placeholder) == false)
+    {
+        <option value="">@_selectComponent.Placeholder</option>
+    }
+    @foreach (var option in GetOptions())
+    {
+        if (option.Equals(Value))
+        {
+            <option value="@option" selected>@option</option>
+        }
+        else
+        {
+            <option value="@option">@option</option>
+        }
+      
+    }
+</select>
+
+@code {
+    private SelectFormComponent _selectComponent;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _selectComponent = (Component as SelectFormComponent);
+    }
+
+    private string[] GetOptions()
+    {
+        if (_selectComponent == null)
+        {
+            return new string[0];
+        }
+        
+        return _selectComponent.Options;
+    }
+
+    private async Task OnValueChanged(ChangeEventArgs arg)
+    {
+        await ValueChanged.InvokeAsync(arg.Value.ToString());
+    }
+
+}

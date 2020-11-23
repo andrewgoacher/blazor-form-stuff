@@ -1,19 +1,18 @@
 @using blazorapp.DynamicForm.Components
 @inherits FormComponentBase
 
-<input @oninput="OnValueChanged" 
+<input @oninput="OnValueChanged"
         type="text"
         value="@Value"
         name="@Component.Name"
-        placeholder="@GetPlaceholder()"
-/>
+        placeholder="@GetPlaceholder()"/>
 
 @code {
 
-        private async Task OnValueChanged(ChangeEventArgs e)
-        {
-            await ValueChanged.InvokeAsync(e.Value.ToString());
-        }
+    private async Task OnValueChanged(ChangeEventArgs e)
+    {
+        await ValueChanged.InvokeAsync(e.Value.ToString());
+    }
 
     private string GetPlaceholder()
     {
